@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
-import { getNews } from "../redux/actions/ajaxAction";
+import { getNews } from "../redux/actions/getNewsAction";
 
 import NavBar from './NavBar';
 import Search from './Search';
@@ -12,35 +12,34 @@ interface FormProps {
   news:  Array<any>;
   item: Record<string, any>;
   index: Record<string, any>;
-  dispatch: Function; 
+  dispatch: Function;   
 }
-
-
 
 class Home extends Component<FormProps> {
 
   componentDidMount() {
-    this.props.get(); 
+    this.props.get();
   }
 
   render() {
     const {news} = this.props
-    console.log('news', news)
+    console.log('newsMount', news)
+
+    
     return (
       <>
         <NavBar />
-        <Search />
         <div className='container'>
-          {/* {news.map((item, index) => {
+        <Search />
+          {news.length && news.map((item) => {           
             return (
-              <div className='product' key={`prod-${index}`}>              
-                <div className='title'>{item.title}</div>
-                <div className='description'>{item.description}</div>                
-                <div className='created_at'>{item.created_at}</div>                   
-                <div className='author'>{item.author}</div> 
+              <div className='news-block-item center-align mt2 pad teal lighten-4 z-depth-3' key={item.id}>              
+                <h3 className='' >{item.title}</h3>
+                <div className='flow-text mt2' >{item.description}</div>                
+                <div className='right-align mt2'>{`Created ${item.created_at}`}</div>
               </div>
             );
-          })} */}
+          })}
        </div>       
       </>
     );
@@ -48,12 +47,13 @@ class Home extends Component<FormProps> {
 }
 
 const mapStateToProps = (store:any) => ({
-  ...store.news  
+  ...store.getArticles
+  
 });
 
 const mapDispatchToProps = (dispatch: any) => {   
   return {
-    get: () => { getNews() }
+    get: () => { dispatch( getNews() ) }
   }
 };
 
