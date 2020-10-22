@@ -9,19 +9,27 @@ body {
   padding-left: 2rem;
   padding-right: 2rem;
 }
+
 .pad{
-  padding: 2rem;
+  padding: 1rem;
 }
+
 .mt2{
   margin-top:2rem ;
 }
 
 .news-block-item{
-  margin-bottom: 2rem;
-  
+  margin-bottom: 2rem;  
   &:hover{
     cursor: pointer;
     box-shadow: none;
-
   }
 }
+.icon{
+  &:hover{
+    cursor: pointer;
+    color:#00bfa5 ;
+  }
+}
+
+
