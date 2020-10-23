@@ -23,3 +23,10 @@ export const removeNews = (payload: number) => {
       payload  
   }
 }
+
+// export const addNews = (payload: number) => {
+//   return { 
+//       type: 'ADD_NEWS',
+//       payload  
+//   }
+// }

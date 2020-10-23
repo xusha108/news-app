@@ -6,21 +6,31 @@ import NavBar from './NavBar';
 import AddNews from './AddNews';
 
 interface FormProps {
+  news:  Array<any>; 
+  index: Record<string, any>;
+  removeItem: boolean; 
+
   getNews: Function;  
   get: Function;  
   remove: Function;  
-  news:  Array<any>; 
-  index: Record<string, any>;
   dispatch: Function;  
+
   removeHandler: (id:number) => void; 
-  removeItem: boolean;
-  openModal: Function;
 }
 
 class Home extends Component<FormProps> {
 
   state ={
     removeItem: false,
+    title: '',
+    text: '',   
+  }
+
+  componentDidMount() {
+    const saveLocalArticles = JSON.parse( localStorage.getItem('articles')  || '{}' )
+    this.setState({ saveLocalArticles });
+    //console.log('saveLocalArticles', saveLocalArticles)
+    this.props.get();
   }
   
   removeHandler = (id:number) => { 
@@ -28,21 +38,14 @@ class Home extends Component<FormProps> {
     this.props.remove(id);
   }
 
-  componentDidMount() {
-    // const saveLocalArticles = localStorage.getItem('articles');
-    // this.setState({ saveLocalArticles });
-    this.props.get();
+  handlerNews = () => {
+    console.log('handlerNews')
   }
 
   render() {
     const {news} = this.props
-   // console.log('newsMount', news)
+    let count = news.length
 
-  //  localStorage.getItem ('articles');
-  //   const storageArticles = localStorage.news.split(',').map( (item: ) => {
-  //        return parseInt(item)         
-  //   });
-   
    let htmlNews = news.length && news.map((item) => {           
     return (                 
         <div className='news-block-item center-align mt2 pad orange lighten-5 z-depth-3' key={item.id}>              
@@ -55,11 +58,20 @@ class Home extends Component<FormProps> {
         </div>    
     );
   })
-    return (
+    
+  return (
       <>
         <NavBar />    
         <div className='container'>   
-        <AddNews />       
+        <AddNews            
+           //title={this.state.title}
+           ///text={this.state.text}          
+           //addContact={this.addContact}
+          handlerNews={this.handlerNews}
+        /> 
+
+          <h5 className='center-align'>Count: {count} </h5>   
+            
           {htmlNews}          
        </div>           
       </>

@@ -7,7 +7,10 @@ export default  (state = initialState, action:any) => {
 
   switch (action.type) {
 
-    case GET_NEWS:    
+    case GET_NEWS: 
+     // console.log('state', action.payload)
+      const saveLocalArticles = JSON.stringify(action.payload)
+      localStorage.setItem ('articles', saveLocalArticles); 
   
       return {        
         ...state,
