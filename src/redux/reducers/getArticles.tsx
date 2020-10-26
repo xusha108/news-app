@@ -1,37 +1,39 @@
-let initialState = {news: []}
+import {State} from '../../interfaces/interfaces';
 
-const ActionTypes = { GET_NEWS: 'GET_NEWS', REMOVE_NEWS: 'REMOVE_NEWS'}
+const ActionTypes = { GET_NEWS: 'GET_NEWS', REMOVE_NEWS: 'REMOVE_NEWS', ADD_ARTICLE:'ADD_ARTICLE'}
 
-export default  (state = initialState, action:any) => {
-  const { GET_NEWS, REMOVE_NEWS } = ActionTypes  
+export default  (state: any, action: any) => {
+  const { GET_NEWS, REMOVE_NEWS, ADD_ARTICLE } = ActionTypes  
 
   switch (action.type) {
-
-    case GET_NEWS: 
-     // console.log('state', action.payload)
-      const saveLocalArticles = JSON.stringify(action.payload)
-      localStorage.setItem ('articles', saveLocalArticles); 
-  
+    case GET_NEWS:      
       return {        
         ...state,
         news: action.payload,
       };
-      case REMOVE_NEWS:
 
-      let newState = {
-        news: state.news,
+    case REMOVE_NEWS:
+      let newState:State  = {
+        ...state,
+        news: [...state.news]
       }
-      let index: number = 0;
-      for (let i=0; i < newState.news.length; i++) {
-        if (action.payload.id === newState.news[i]) {
+      let index: number = -1;
+      for (let i=0; i < newState.news.length; i++) {        
+        if (action.payload === newState.news[i].id) {
           index = i;
           break;
         }
       }     
-      newState.news.splice( index, 1);
-      
+      newState.news.splice( index, 1);      
       return newState;
-         
+  
+      case ADD_ARTICLE:
+        const newStore = {
+          ...state,
+          news: [...state.news, action.payload]
+        }
+        return newStore;
+
     default:
        return state;
   } 
