@@ -33,7 +33,6 @@ export default function Home(props: IHome) {
       <NavBar />    
       <div className='container'>   
         <AddNews addArticle={addArticle} /> 
-
         <h5 className='center-align'>Count: {count} </h5> 
         {
           news.length 

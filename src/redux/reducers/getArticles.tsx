@@ -32,6 +32,7 @@ export default  (state: any, action: any) => {
           ...state,
           news: [...state.news, action.payload]
         }
+        
         return newStore;
 
     default:
